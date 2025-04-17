@@ -1,8 +1,66 @@
 # C++ Mini Projects: Systems Programming Series
 
-Welcome to the `cpp/mini-projects` collection — a curated series of C++ projects focused on operating systems, Linux internals, resource management, and performance-oriented programming. This collection serves as a practical, structured roadmap for deepening your understanding of C++17+ and systems-level development.
+Welcome to the `mini-projects` collection — a curated series of C++ projects focused on operating systems, Linux internals, resource management, and performance-oriented programming. This collection serves as a practical, structured roadmap for deepening my understanding of C++17+ and systems-level development.
 
 Each project is self-contained in its own subdirectory, but all share the same Git root for version control and GitHub publishing.
+
+## Development Environment Setup
+
+Since these projects focus on Linux systems programming, you'll need a Linux environment. Docker provides a consistent, lightweight Linux container that works on any operating system (Windows, macOS, Linux).
+
+### Docker Development Environment
+
+This repository includes Docker configuration files to create a consistent development environment with all necessary tools.
+
+#### Prerequisites
+
+- [Docker](https://www.docker.com/get-started) installed on your system
+- [Docker Compose](https://docs.docker.com/compose/install/) (included with Docker Desktop)
+
+#### Getting Started with Docker
+
+1. **Build and start the development container:**
+
+   ```bash
+   # Start the container in detached mode
+   docker-compose up -d
+   
+   # Enter the container shell
+   docker-compose exec dev bash
+   ```
+
+2. **Inside the container, you can build and run any project:**
+
+   ```bash
+   # Example: Building the process monitor
+   cd process_monitor
+   mkdir -p build && cd build
+   cmake ..
+   make
+   ./monitor
+   ```
+
+3. **When you're done, exit and stop the container:**
+
+   ```bash
+   # Exit the container shell
+   exit
+   
+   # Stop the container
+   docker-compose down
+   ```
+
+#### VS Code Integration (Optional)
+
+If you use Visual Studio Code, you can get a seamless experience:
+
+1. Install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension
+2. Click the green "><" icon in the bottom-left corner
+3. Select "Remote-Containers: Attach to Running Container..."
+4. Choose the running development container
+5. VS Code will open a new window connected to the container
+
+This gives you full IDE features (IntelliSense, debugging, etc.) while working inside the container.
 
 ---
 
@@ -60,19 +118,6 @@ This series emphasizes:
 - Build your own allocator and memory frames
 - Implement FIFO, LRU, Optimal algorithms
 - Reinforce pointer management and algorithm design
-
----
-
-## Timeline (Recommended)
-| Week Range | Project                        | Key Focus                                 |
-|------------|--------------------------------|-------------------------------------------|
-| 1–1.5      | Process Monitor                | Linux internals, file parsing, OOP        |
-| 1.5–2.5    | System Resource Logger         | IO patterns, logging, timers              |
-| 2.5–3.5    | Resource Sandbox               | Syscalls, scheduling, process management  |
-| 3.5–4.25   | Thread Pool Library            | Multithreading, queue design, concurrency |
-| 4.25–5     | Virtual Memory Simulator       | Memory handling, algorithms, raw pointers |
-
----
 
 ## Tooling Setup
 - Compiler: `g++` or `clang++` (C++17 or newer)

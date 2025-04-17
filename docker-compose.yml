@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Maps the project directory on your host to /workspace in the container
+      # This allows you to edit files on your host machine and have those changes
+      # immediately available in the container
+      - .:/workspace
+    working_dir: /workspace
+    # The following two settings make the container interactive so you can use the shell
+    tty: true          # Allocates a pseudo-TTY, similar to running docker with -t
+    stdin_open: true   # Keeps STDIN open, similar to running docker with -i
+    cap_add:
+      - SYS_PTRACE     # Needed for debugging with gdb
+    # Optional: Uncomment to expose ports if needed for any network services
+    # ports:
+    #   - "8080:8080"

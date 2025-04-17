@@ -1,0 +1,17 @@
+# Ignore build directories
+**/build/
+**/cmake-build-*/
+
+# Ignore git directory
+.git/
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
