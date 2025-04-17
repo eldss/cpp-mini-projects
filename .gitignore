@@ -68,3 +68,6 @@ _deps/
 # Generated documentation
 **/doc/html/
 **/doc/latex/
+
+# Amazon Q guidance file
+AmazonQ.md
