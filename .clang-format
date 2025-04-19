@@ -1,0 +1,68 @@
+BasedOnStyle: Google
+
+# Line length
+ColumnLimit: 120
+
+# Indentation
+UseTab: Never
+IndentWidth: 4
+
+# Braces
+AlwaysBreakAfterControlStatements: true
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+
+# Spaces
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+SpacesInConditionalStatement: false
+SpacesInCStyleCastParentheses: false
+SpaceAfterCStyleCast: false
+SpacesInSquareBrackets: false
+SpaceBeforeCpp11BracedList: false
+
+# Includes
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '^<.*\.h>'
+    Priority:        1
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '^<.*>'
+    Priority:        2
+    SortPriority:    1
+    CaseSensitive:   false
+  - Regex:           '^".*"'   # Your project's headers
+    Priority:        3
+    SortPriority:    2
+    CaseSensitive:   false
+IncludeIsMainRegex: '([-_]*)([^/_]+)([-_]*)(test)?'
+SortIncludes: true
+
+# Struct/Class formatting
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowAllConstructorInitializersOnNextLine: false
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+BreakBeforeBraces: Attach
+
+# Access modifiers (related to grouping)
+SortUsingDeclarations: true
+
+# Misc
+ReflowComments: true
+CommentPragmas: '^/[*]'
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Format macros
+MacroBlockBegin: '^BEGIN_INTERFACE$'
+MacroBlockEnd: '^END_INTERFACE$'
+
+# Objective: Emphasize structure, readability, and Doxygen-friendly format
+AlignTrailingComments: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+AlignEscapedNewlines: Left
