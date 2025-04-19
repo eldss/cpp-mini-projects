@@ -10,7 +10,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories(include)
 
 # Add executable
-add_executable(monitor src/main.cpp)
+add_executable(monitor 
+    src/main.cpp
+    src/process.cpp
+)
+
+# Link with filesystem library if needed
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_link_libraries(monitor stdc++fs)
+endif()
 
 # Optional: Add testing
 option(BUILD_TESTS "Build the tests" ON)
