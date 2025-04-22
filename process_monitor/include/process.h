@@ -21,7 +21,7 @@ class Process {
      * Updates all process information from proc
      * @return Status code indicating success or failure
      */
-    Process::Status updateInfo();
+    Status updateInfo();
 
     // Getters
     int32_t            getPid() const { return m_pid; }
@@ -32,8 +32,12 @@ class Process {
     const std::string& getUser() const { return m_user; }
     const std::string& getState() const { return m_state; }
 
+    // For testing purposes
+    static void setProcRoot(const std::filesystem::path& path) { PROC_ROOT = path; }
+
    private:
-    static const std::filesystem::path PROC_ROOT;
+    // Changed from const to allow modification for testing
+    static std::filesystem::path       PROC_ROOT;
     static const std::filesystem::path COMMAND_NAME;
 
     /// @brief Process ID
@@ -57,9 +61,9 @@ class Process {
     /// @brief State of process
     std::string m_state;
 
-    Process::Status readProcessName();
-    Process::Status readProcessState();
-    Process::Status readMemoryUsage();
-    Process::Status readUserInfo();
-    Process::Status calculateCpuUsage();
+    Status readProcessName();
+    Status readProcessState();
+    Status readMemoryUsage();
+    Status readUserInfo();
+    Status calculateCpuUsage();
 };

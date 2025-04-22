@@ -10,10 +10,23 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch2)
 
 # Add test executable
-add_executable(process_monitor_tests test_main.cpp)
+add_executable(process_monitor_tests 
+    test_main.cpp
+    test_process.cpp
+)
+
+# Add source files to test executable
+target_sources(process_monitor_tests PRIVATE 
+    ${CMAKE_SOURCE_DIR}/src/process.cpp
+)
 
 # Link with Catch2
 target_link_libraries(process_monitor_tests PRIVATE Catch2::Catch2WithMain)
+
+# Link with filesystem library if needed
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_link_libraries(process_monitor_tests stdc++fs)
+endif()
 
 # Register tests with CTest
 include(CTest)

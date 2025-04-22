@@ -8,7 +8,8 @@
 
 namespace fs = std::filesystem;
 
-const fs::path Process::PROC_ROOT{"/path"};
+// For testing purposes, make this modifiable
+fs::path Process::PROC_ROOT{"/proc"};
 const fs::path Process::COMMAND_NAME{"comm"};
 
 Process::Process(int32_t pid)
@@ -23,11 +24,17 @@ Process::Process(int32_t pid)
 }
 
 Process::Status Process::updateInfo() {
-    readProcessName();
+    Process::Status status = readProcessName();
+    if (status != Process::Status::OK) {
+        return status;
+    }
+    
     readProcessState();
     readMemoryUsage();
     readUserInfo();
     calculateCpuUsage();
+    
+    return Process::Status::OK;
 }
 
 Process::Status Process::readProcessName() {
@@ -64,10 +71,18 @@ Process::Status Process::readProcessName() {
     return Process::Status::OK;
 }
 
-Process::Status Process::readProcessState() {}
+Process::Status Process::readProcessState() {
+    return Process::Status::OK;
+}
 
-Process::Status Process::readMemoryUsage() {}
+Process::Status Process::readMemoryUsage() {
+    return Process::Status::OK;
+}
 
-Process::Status Process::readUserInfo() {}
+Process::Status Process::readUserInfo() {
+    return Process::Status::OK;
+}
 
-Process::Status Process::calculateCpuUsage() {}
+Process::Status Process::calculateCpuUsage() {
+    return Process::Status::OK;
+}
