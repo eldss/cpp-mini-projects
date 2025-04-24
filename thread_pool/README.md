@@ -24,11 +24,37 @@ A general-purpose, reusable thread pool implementation in C++ for efficient task
 
 ### Prerequisites
 
+- Docker and Docker Compose (for development environment)
+- Or a Linux-based operating system (for direct access)
 - C++17 compatible compiler (g++ or clang++)
 - CMake (3.14 or newer)
 - POSIX threads library (pthread)
 
 ### Building the Project
+
+#### Using Docker (Recommended)
+
+The repository includes a Docker setup for consistent development:
+
+```bash
+# Start the Docker container
+docker-compose up -d
+
+# Build the project using the helper script
+./docker-build.sh thread_pool
+
+# Run the example program
+docker-compose exec dev bash -c "cd /workspace/thread_pool/build && ./thread_pool_example"
+
+# Run the tests
+docker-compose exec dev bash -c "cd /workspace/thread_pool/build && ctest"
+# Or for more detailed test output:
+docker-compose exec dev bash -c "cd /workspace/thread_pool/build && ./tests/thread_pool_tests"
+```
+
+#### Building Directly (Linux Only)
+
+If you're on a Linux system and prefer to build directly:
 
 ```bash
 mkdir build && cd build

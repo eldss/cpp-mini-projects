@@ -24,31 +24,67 @@ This repository includes Docker configuration files to create a consistent devel
    ```bash
    # Start the container in detached mode
    docker-compose up -d
-   
-   # Enter the container shell
-   docker-compose exec dev bash
    ```
 
-2. **Inside the container, you can build and run any project:**
+2. **Build a project using the helper script:**
 
    ```bash
-   # Example: Building the process monitor
-   cd process_monitor
-   mkdir -p build && cd build
-   cmake ..
-   make
-   ./monitor
+   # Build a specific project (e.g., process_monitor)
+   ./docker-build.sh process_monitor
    ```
 
-3. **When you're done, exit and stop the container:**
+   This script will:
+   - Clean up any existing build files
+   - Create a fresh build directory
+   - Run CMake and make inside the Docker container
+   - Show you how to run the compiled program
+
+3. **Run the compiled program:**
 
    ```bash
-   # Exit the container shell
-   exit
+   # Run the program inside the Docker container
+   docker-compose exec dev bash -c "cd /workspace/process_monitor/build && ./monitor"
+   ```
+
+4. **Run tests for a project:**
+
+   ```bash
+   # Run tests using CTest
+   docker-compose exec dev bash -c "cd /workspace/process_monitor/build && ctest"
    
+   # Or for more detailed test output
+   docker-compose exec dev bash -c "cd /workspace/process_monitor/build && ./tests/process_monitor_tests"
+   ```
+
+5. **When you're done, stop the container:**
+
+   ```bash
    # Stop the container
    docker-compose down
    ```
+
+#### Alternative: Manual Building Inside Container
+
+If you prefer to build manually inside the container:
+
+```bash
+# Enter the container shell
+docker-compose exec dev bash
+
+# Inside the container, navigate to a project
+cd /workspace/process_monitor
+
+# Create build directory and build
+mkdir -p build && cd build
+cmake ..
+make
+
+# Run the program
+./monitor
+
+# Exit when done
+exit
+```
 
 #### VS Code Integration (Optional)
 
@@ -127,20 +163,3 @@ This series emphasizes:
   - `fmt` for formatting
   - `doctest` or `Catch2` for testing
   - `ncurses` for TUI
-
----
-
-## How to Use
-Each subdirectory contains:
-- `CMakeLists.txt`
-- `README.md` with project-specific goals
-- `src/` and `include/` folders
-- Optional: `tests/` folder for unit tests
-
-To start a project:
-```bash
-cd cpp/mini-projects/process_monitor
-mkdir build && cd build
-cmake .. && make
-./monitor
-```

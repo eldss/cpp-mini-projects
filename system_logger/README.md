@@ -25,12 +25,37 @@ A time-series logger for system-level resource statistics that tracks and record
 
 ### Prerequisites
 
-- Linux-based operating system
+- Docker and Docker Compose (for development environment)
+- Or a Linux-based operating system (for direct access)
 - C++17 compatible compiler (g++ or clang++)
 - CMake (3.14 or newer)
 - Optional: JSON library (e.g., nlohmann/json)
 
 ### Building the Project
+
+#### Using Docker (Recommended)
+
+The repository includes a Docker setup for consistent development:
+
+```bash
+# Start the Docker container
+docker-compose up -d
+
+# Build the project using the helper script
+./docker-build.sh system_logger
+
+# Run the program
+docker-compose exec dev bash -c "cd /workspace/system_logger/build && ./logger"
+
+# Run the tests
+docker-compose exec dev bash -c "cd /workspace/system_logger/build && ctest"
+# Or for more detailed test output:
+docker-compose exec dev bash -c "cd /workspace/system_logger/build && ./tests/system_logger_tests"
+```
+
+#### Building Directly (Linux Only)
+
+If you're on a Linux system and prefer to build directly:
 
 ```bash
 mkdir build && cd build

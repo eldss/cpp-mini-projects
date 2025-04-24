@@ -24,12 +24,37 @@ A utility for modifying scheduling parameters, CPU affinity, and niceness for an
 
 ### Prerequisites
 
-- Linux-based operating system
+- Docker and Docker Compose (for development environment)
+- Or a Linux-based operating system (for direct access)
 - C++17 compatible compiler (g++ or clang++)
 - CMake (3.14 or newer)
 - Root/sudo access for modifying other processes
 
 ### Building the Project
+
+#### Using Docker (Recommended)
+
+The repository includes a Docker setup for consistent development:
+
+```bash
+# Start the Docker container
+docker-compose up -d
+
+# Build the project using the helper script
+./docker-build.sh resource_sandbox
+
+# Run the program
+docker-compose exec dev bash -c "cd /workspace/resource_sandbox/build && ./sandbox"
+
+# Run the tests
+docker-compose exec dev bash -c "cd /workspace/resource_sandbox/build && ctest"
+# Or for more detailed test output:
+docker-compose exec dev bash -c "cd /workspace/resource_sandbox/build && ./tests/resource_sandbox_tests"
+```
+
+#### Building Directly (Linux Only)
+
+If you're on a Linux system and prefer to build directly:
 
 ```bash
 mkdir build && cd build

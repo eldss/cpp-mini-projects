@@ -26,22 +26,42 @@ A terminal-based monitor for active Linux processes, similar to a simplified ver
 
 ### Prerequisites
 
-- Linux-based operating system (for `/proc` access)
+- Docker and Docker Compose (for development environment)
+- Or a Linux-based operating system (for direct `/proc` access)
 - C++17 compatible compiler (g++ or clang++)
 - CMake (3.14 or newer)
 - Optional: ncurses library for advanced terminal UI
 
 ### Building the Project
 
+#### Using Docker (Recommended)
+
+The repository includes a Docker setup for consistent development:
+
+```bash
+# Start the Docker container
+docker-compose up -d
+
+# Build the project using the helper script
+./docker-build.sh process_monitor
+
+# Run the program
+docker-compose exec dev bash -c "cd /workspace/process_monitor/build && ./monitor"
+
+# Run the tests
+docker-compose exec dev bash -c "cd /workspace/process_monitor/build && ctest"
+# Or for more detailed test output:
+docker-compose exec dev bash -c "cd /workspace/process_monitor/build && ./tests/process_monitor_tests"
+```
+
+#### Building Directly (Linux Only)
+
+If you're on a Linux system and prefer to build directly:
+
 ```bash
 mkdir build && cd build
 cmake ..
 make
-```
-
-### Running the Monitor
-
-```bash
 ./monitor
 ```
 

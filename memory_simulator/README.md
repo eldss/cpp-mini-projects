@@ -25,10 +25,36 @@ A simulator for virtual memory management that demonstrates page tables, page fa
 
 ### Prerequisites
 
+- Docker and Docker Compose (for development environment)
+- Or a Linux-based operating system (for direct access)
 - C++17 compatible compiler (g++ or clang++)
 - CMake (3.14 or newer)
 
 ### Building the Project
+
+#### Using Docker (Recommended)
+
+The repository includes a Docker setup for consistent development:
+
+```bash
+# Start the Docker container
+docker-compose up -d
+
+# Build the project using the helper script
+./docker-build.sh memory_simulator
+
+# Run the simulator
+docker-compose exec dev bash -c "cd /workspace/memory_simulator/build && ./memory_sim"
+
+# Run the tests
+docker-compose exec dev bash -c "cd /workspace/memory_simulator/build && ctest"
+# Or for more detailed test output:
+docker-compose exec dev bash -c "cd /workspace/memory_simulator/build && ./tests/memory_simulator_tests"
+```
+
+#### Building Directly (Linux Only)
+
+If you're on a Linux system and prefer to build directly:
 
 ```bash
 mkdir build && cd build
