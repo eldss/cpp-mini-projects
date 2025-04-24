@@ -9,7 +9,26 @@ class Process {
     /**
      * Status codes for Process class
      */
-    enum class Status { OK = 0, FILE_NOT_FOUND, FILE_NOT_READABLE, READ_ERROR, EMPTY_NAME };
+    enum class Status { OK = 0, FILE_NOT_FOUND, FILE_NOT_READABLE, READ_ERROR };
+
+    /**
+     * Possible process states, per /stat file (https://man7.org/linux/man-pages/man5/proc_pid_stat.5.html), plus
+     * Unknown
+     */
+    enum class State {
+        RUNNING,
+        SLEEPING,
+        WAITING,
+        ZOMBIE,
+        STOPPED,
+        TRACING,
+        DEAD,
+        WAKE_KILL,
+        WAKING,
+        PARKED,
+        IDLE,
+        UNKNOWN,
+    };
 
     /**
      * Creates a new process object
@@ -30,7 +49,7 @@ class Process {
     double             getMemoryUsage() const { return m_memory_usage; }
     int64_t            getMemoryKb() const { return m_memory_kb; }
     const std::string& getUser() const { return m_user; }
-    const std::string& getState() const { return m_state; }
+    const State        getState() const { return m_state; }
 
     // For testing purposes
     static void setProcRoot(const std::filesystem::path& path) { PROC_ROOT = path; }
@@ -39,6 +58,7 @@ class Process {
     // Changed from const to allow modification for testing
     static std::filesystem::path       PROC_ROOT;
     static const std::filesystem::path COMMAND_NAME;
+    static const std::filesystem::path STATISTICS;
 
     /// @brief Process ID
     int32_t m_pid;
@@ -59,11 +79,14 @@ class Process {
     std::string m_user;
 
     /// @brief State of process
-    std::string m_state;
+    State m_state;
 
+    // I could probably get everything from /stat but for the sake of learning, I'll be getting each of these from
+    // separate individual proc/[id] files.
     Status readProcessName();
     Status readProcessState();
     Status readMemoryUsage();
     Status readUserInfo();
     Status calculateCpuUsage();
+    Status readLineFromProc(int32_t pid, std::filesystem::path subdir, std::string& output);
 };

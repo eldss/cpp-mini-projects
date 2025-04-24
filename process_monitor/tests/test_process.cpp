@@ -4,6 +4,10 @@
 
 #include "../include/process.h"
 
+/*
+ *  Tests are not necessarily exhaustive. They are just intended to get a feel for testing in C++.
+ */
+
 // Create a test fixture for Process tests
 class ProcessTestFixture {
    public:
@@ -28,6 +32,11 @@ class ProcessTestFixture {
         commFile << "test_process" << std::endl;
         commFile.close();
 
+        // Create a stat file with a test PID
+        std::ofstream statFile(m_mockProcDir / "12345" / "stat");
+        statFile << "12345 (Test name here) R other fields here" << std::endl;
+        statFile.close();
+
         // Set the Process class to use our mock directory
         Process::setProcRoot(m_mockProcDir);
     }
@@ -49,7 +58,7 @@ TEST_CASE_METHOD(ProcessTestFixture, "Process name is read correctly", "[process
 }
 
 // Test handling of non-existent process
-TEST_CASE_METHOD(ProcessTestFixture, "Non-existent process returns FILE_NOT_FOUND", "[process]") {
+TEST_CASE_METHOD(ProcessTestFixture, "Non-existent process returns Unknown name", "[process]") {
     // Create a Process object with a non-existent PID
     Process process(99999);
 
@@ -58,7 +67,7 @@ TEST_CASE_METHOD(ProcessTestFixture, "Non-existent process returns FILE_NOT_FOUN
 }
 
 // Test handling of empty process name
-TEST_CASE_METHOD(ProcessTestFixture, "Empty process name returns EMPTY_NAME", "[process]") {
+TEST_CASE_METHOD(ProcessTestFixture, "Empty process name returns Unknown name", "[process]") {
     // Create an empty comm file
     std::filesystem::create_directories(m_mockProcDir / "54321");
     std::ofstream commFile(m_mockProcDir / "54321" / "comm");
@@ -69,4 +78,20 @@ TEST_CASE_METHOD(ProcessTestFixture, "Empty process name returns EMPTY_NAME", "[
 
     // Name should be "Unknown" since the file was empty
     REQUIRE(process.getName() == "Unknown");
+}
+
+TEST_CASE_METHOD(ProcessTestFixture, "Process state is read correctly from stat file", "[process]") {
+    // Create a Process object with our test PID
+    Process process(12345);
+
+    // Check that the state was read correctly
+    REQUIRE(process.getState() == Process::State::RUNNING);
+}
+
+TEST_CASE_METHOD(ProcessTestFixture, "Process state is unknown for an unknown process", "[process]") {
+    // Create a Process object with a non-existent PID
+    Process process(99999);
+
+    // State should be UNKNOWN since the file wasn't found
+    REQUIRE(process.getState() == Process::State::UNKNOWN);
 }
