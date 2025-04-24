@@ -15,16 +15,23 @@ add_executable(thread_pool_tests
     thread_pool_tests.cpp
 )
 
-# Link with Catch2 and thread_pool library
-target_link_libraries(thread_pool_tests PRIVATE 
-    Catch2::Catch2WithMain
-    thread_pool
-)
-
-# Link with pthread on Unix-like systems
+# Find threads package if on Unix-like systems
 if(UNIX)
     find_package(Threads REQUIRED)
-    target_link_libraries(thread_pool_tests PRIVATE Threads::Threads)
+endif()
+
+# Link with Catch2, thread_pool library, and threads if needed
+if(UNIX)
+    target_link_libraries(thread_pool_tests PRIVATE 
+        Catch2::Catch2WithMain
+        thread_pool
+        Threads::Threads
+    )
+else()
+    target_link_libraries(thread_pool_tests PRIVATE 
+        Catch2::Catch2WithMain
+        thread_pool
+    )
 endif()
 
 # Register tests with CTest

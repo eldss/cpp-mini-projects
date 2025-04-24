@@ -20,12 +20,11 @@ target_sources(process_monitor_tests PRIVATE
     ${CMAKE_SOURCE_DIR}/src/process.cpp
 )
 
-# Link with Catch2
-target_link_libraries(process_monitor_tests PRIVATE Catch2::Catch2WithMain)
-
-# Link with filesystem library if needed
+# Link with Catch2 and other libraries
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    target_link_libraries(process_monitor_tests stdc++fs)
+    target_link_libraries(process_monitor_tests PRIVATE Catch2::Catch2WithMain stdc++fs)
+else()
+    target_link_libraries(process_monitor_tests PRIVATE Catch2::Catch2WithMain)
 endif()
 
 # Register tests with CTest
