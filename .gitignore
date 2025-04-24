@@ -37,9 +37,16 @@
 
 # IDE files
 .idea/
-.vscode/
+# Allow .vscode configuration for better team collaboration
+# .vscode/
 *.swp
 *.swo
+
+# VS Code specific files to ignore
+.vscode/browse.vc.db
+.vscode/ipch/
+.vscode/.ropeproject/
+.vscode/tags
 
 # CMake generated files
 CMakeCache.txt
