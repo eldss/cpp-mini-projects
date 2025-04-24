@@ -102,4 +102,5 @@
     "vector": "cpp",
     "algorithm": "cpp"
   },
+  "cmake.sourceDirectory": "/Users/evandouglass/Code/edu/cpp/mini-projects/process_monitor",
 }
