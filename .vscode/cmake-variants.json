@@ -1,0 +1,57 @@
+{
+  "buildType": {
+    "default": "debug",
+    "choices": {
+      "debug": {
+        "short": "Debug",
+        "long": "Debug build with full symbols",
+        "buildType": "Debug"
+      },
+      "release": {
+        "short": "Release",
+        "long": "Optimized release build",
+        "buildType": "Release"
+      }
+    }
+  },
+  "activeProject": {
+    "default": "process_monitor",
+    "choices": {
+      "process_monitor": {
+        "short": "Process Monitor",
+        "buildType": "Debug",
+        "settings": {
+          "CMAKE_SOURCE_DIR": "${workspaceFolder}/process_monitor"
+        }
+      },
+      "system_logger": {
+        "short": "System Logger",
+        "buildType": "Debug",
+        "settings": {
+          "CMAKE_SOURCE_DIR": "${workspaceFolder}/system_logger"
+        }
+      },
+      "resource_sandbox": {
+        "short": "Resource Sandbox",
+        "buildType": "Debug",
+        "settings": {
+          "CMAKE_SOURCE_DIR": "${workspaceFolder}/resource_sandbox"
+        }
+      },
+      "thread_pool": {
+        "short": "Thread Pool",
+        "buildType": "Debug",
+        "settings": {
+          "CMAKE_SOURCE_DIR": "${workspaceFolder}/thread_pool"
+        }
+      },
+      "memory_simulator": {
+        "short": "Memory Simulator",
+        "buildType": "Debug",
+        "settings": {
+          "CMAKE_SOURCE_DIR": "${workspaceFolder}/memory_simulator"
+        }
+      }
+    }
+  }
+}
