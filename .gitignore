@@ -41,6 +41,8 @@
 # .vscode/
 *.swp
 *.swo
+*.db-shm
+*.db-wal
 
 # VS Code specific files to ignore
 .vscode/browse.vc.db
